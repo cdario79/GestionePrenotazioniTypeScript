@@ -1,0 +1,127 @@
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+:focus-visible {
+  outline: 3px solid #0d6efd;
+  outline-offset: 2px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.sala-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.sala-card:hover,
+.sala-card:focus-within {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-color: #0d6efd;
+}
+
+.badge-capacita {
+  font-size: 0.9rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.stato-confermata {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+.stato-in_attesa {
+  background-color: #fff3cd;
+  color: #997404;
+}
+
+.stato-cancellata {
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+.prenotazione-item {
+  border-left: 4px solid #0d6efd;
+  transition: background-color 0.2s ease;
+}
+
+.prenotazione-item:hover {
+  background-color: #f8f9fa;
+}
+
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .sala-card {
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bs-body-bg: #212529;
+    --bs-body-color: #dee2e6;
+  }
+}
+
+@media print {
+  .btn,
+  header,
+  footer,
+  #prenotazione-form {
+    display: none;
+  }
+
+  .sala-card,
+  .prenotazione-item {
+    break-inside: avoid;
+  }
+}

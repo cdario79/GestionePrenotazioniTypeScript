@@ -19,66 +19,17 @@
 }
 
 :root {
-  --app-bg: #F8FAFC;
-  --calendar-bg: #FFFFFF;
-  --grid-line: #E2E8F0;
-  --column-header-bg: #F1F5F9;
-  --text-primary: #0F172A;
-  --text-secondary: #475569;
-  
-  --slot-available-bg: #F8FAFC;
-  --slot-available-border: #CBD5E1;
-  --slot-available-hover: #E2E8F0;
-  
-  --slot-occupied-bg: #FEE2E2;
-  --slot-occupied-border: #FCA5A5;
-  --slot-occupied-text: #991B1B;
-  --slot-occupied-hover: #FECACA;
-  
-  --slot-user-bg: #DCFCE7;
-  --slot-user-border: #86EFAC;
-  --slot-user-text: #166534;
-  --slot-user-hover: #BBF7D0;
-  
-  --slot-selection-bg: #DBEAFE;
-  --slot-selection-border: #60A5FA;
-  --slot-selection-text: #1E40AF;
-  --slot-selection-hover: #BFDBFE;
-  
-  --primary-btn: #2563EB;
-  --primary-btn-hover: #1D4ED8;
-  
   --time-col-width: 70px;
   --room-col-min-width: 180px;
   --slot-height: 42px;
-}
-
-body {
-  background-color: var(--app-bg);
-  color: var(--text-primary);
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fade-in {
-  animation: fadeIn 0.3s ease-in;
+  --grid-line: #dee2e6;
 }
 
 .griglia-tabella {
   font-size: 0.8125rem;
   border-collapse: separate;
   border-spacing: 0;
-  background: var(--calendar-bg);
+  background: #fff;
   border: 1px solid var(--grid-line);
   border-radius: 8px;
   overflow: hidden;
@@ -94,30 +45,30 @@ body {
 }
 
 .griglia-tabella thead th {
-  background: var(--column-header-bg);
+  background: #f8f9fa;
   font-weight: 600;
   font-size: 0.875rem;
-  color: var(--text-primary);
+  color: #212529;
   padding: 12px 8px;
 }
 
 .griglia-tabella .ora-colonna {
   position: sticky;
   left: 0;
-  background: var(--column-header-bg);
+  background: #f8f9fa;
   z-index: 10;
   min-width: var(--time-col-width);
   width: var(--time-col-width);
   text-align: center !important;
   font-weight: 500;
   font-size: 0.75rem;
-  color: var(--text-secondary);
+  color: #6c757d;
 }
 
 .griglia-tabella thead th:not(.ora-colonna) {
   position: sticky;
   top: 0;
-  background: var(--column-header-bg);
+  background: #f8f9fa;
   z-index: 5;
   white-space: nowrap;
   min-width: var(--room-col-min-width);
@@ -129,8 +80,8 @@ body {
   cursor: pointer;
   transition: all 0.15s ease;
   border-radius: 0;
-  border: 1px solid var(--slot-available-border);
-  background-color: var(--slot-available-bg);
+  border: 1px solid #ced4da;
+  background-color: #f8f9fa;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -138,40 +89,40 @@ body {
 }
 
 .griglia-cell:hover {
-  background-color: var(--slot-available-hover);
+  background-color: #e9ecef;
 }
 
 .griglia-cell.libero {
-  background-color: var(--slot-available-bg);
-  border-color: var(--slot-available-border);
+  background-color: #f8f9fa;
+  border-color: #ced4da;
 }
 
 .griglia-cell.libero:hover {
-  background-color: var(--slot-available-hover);
-  border-color: #94A3B8;
+  background-color: #e9ecef;
+  border-color: #adb5bd;
 }
 
 .griglia-cell.libero:focus-visible {
-  outline: 3px solid var(--primary-btn);
+  outline: 3px solid #2563EB;
   outline-offset: -3px;
 }
 
 .griglia-cell.occupato {
-  background-color: var(--slot-occupied-bg);
-  border-color: var(--slot-occupied-border);
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
   cursor: not-allowed;
 }
 
 .griglia-cell.occupato:hover {
-  background-color: var(--slot-occupied-hover);
+  background-color: #f5c2c7;
   transform: none;
   box-shadow: none;
 }
 
 .griglia-cell.occupato .prenotazione-info {
   font-size: 0.8125rem;
-  font-weight: 500;
-  color: var(--slot-occupied-text);
+  font-weight: 600;
+  color: #842029;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -180,19 +131,19 @@ body {
 }
 
 .griglia-cell.utente {
-  background-color: var(--slot-user-bg);
-  border-color: var(--slot-user-border);
+  background-color: #d1e7dd;
+  border-color: #a3cfbb;
   cursor: not-allowed;
 }
 
 .griglia-cell.utente:hover {
-  background-color: var(--slot-user-hover);
+  background-color: #a3cfbb;
 }
 
 .griglia-cell.utente .prenotazione-info {
   font-size: 0.8125rem;
-  font-weight: 500;
-  color: var(--slot-user-text);
+  font-weight: 600;
+  color: #0f5132;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -201,27 +152,27 @@ body {
 }
 
 .griglia-cell.selezionato {
-  background-color: var(--slot-selection-bg);
-  border-color: var(--slot-selection-border);
-  box-shadow: inset 0 0 0 2px var(--slot-selection-border);
+  background-color: #cfe2ff;
+  border-color: #9ec5fe;
+  box-shadow: inset 0 0 0 2px #9ec5fe;
 }
 
 .griglia-cell.selezionato:hover {
-  background-color: var(--slot-selection-hover);
+  background-color: #b6d4fe;
 }
 
 .griglia-cell.invalid {
-  background-color: #F1F5F9;
-  border-color: #E2E8F0;
+  background-color: #e9ecef;
+  border-color: #dee2e6;
   cursor: not-allowed;
   opacity: 0.5;
 }
 
 .griglia-controls {
-  background: var(--calendar-bg);
+  background: #fff;
   padding: 16px 20px;
   border-radius: 8px;
-  border: 1px solid var(--grid-line);
+  border: 1px solid #dee2e6;
   margin-bottom: 16px;
 }
 
@@ -236,7 +187,7 @@ body {
   align-items: center;
   gap: 6px;
   font-size: 0.75rem;
-  color: var(--text-secondary);
+  color: #6c757d;
 }
 
 .griglia-legend .legend-color {
@@ -247,28 +198,28 @@ body {
 }
 
 .griglia-legend .legend-color.available {
-  background: var(--slot-available-bg);
-  border-color: var(--slot-available-border);
+  background: #f8f9fa;
+  border-color: #ced4da;
 }
 
 .griglia-legend .legend-color.occupied {
-  background: var(--slot-occupied-bg);
-  border-color: var(--slot-occupied-border);
+  background: #f8d7da;
+  border-color: #f5c2c7;
 }
 
 .griglia-legend .legend-color.user {
-  background: var(--slot-user-bg);
-  border-color: var(--slot-user-border);
+  background: #d1e7dd;
+  border-color: #a3cfbb;
 }
 
 .btn-primary {
-  background-color: var(--primary-btn);
-  border-color: var(--primary-btn);
+  background-color: #2563EB;
+  border-color: #2563EB;
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-btn-hover);
-  border-color: var(--primary-btn-hover);
+  background-color: #1D4ED8;
+  border-color: #1D4ED8;
 }
 
 @media (max-width: 768px) {
@@ -301,26 +252,24 @@ body {
     flex-direction: column;
     gap: 1rem;
     padding: 0.5rem;
-    background: var(--app-bg);
   }
   
   .ora-card {
-    background: var(--calendar-bg);
-    border: 1px solid var(--grid-line);
+    background: #fff;
+    border: 1px solid #dee2e6;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0,0,0,0.08);
   }
   
   .ora-card-header {
-    background: var(--column-header-bg);
+    background: #f8f9fa;
     padding: 12px 16px;
-    border-bottom: 1px solid var(--grid-line);
+    border-bottom: 1px solid #dee2e6;
     display: flex;
     align-items: center;
     font-weight: 600;
     font-size: 0.875rem;
-    color: var(--text-primary);
   }
   
   .ora-card-body {
@@ -336,8 +285,8 @@ body {
     margin-bottom: 6px;
     cursor: pointer;
     transition: all 0.15s ease;
-    border: 1px solid var(--slot-available-border);
-    background: var(--slot-available-bg);
+    border: 1px solid #ced4da;
+    background: #f8f9fa;
   }
   
   .sala-item:last-child {
@@ -345,37 +294,37 @@ body {
   }
   
   .sala-item.libero {
-    background: var(--slot-available-bg);
-    border-color: var(--slot-available-border);
+    background: #f8f9fa;
+    border-color: #ced4da;
   }
   
   .sala-item.libero:hover {
-    background: var(--slot-available-hover);
+    background: #e9ecef;
     transform: translateX(4px);
   }
   
   .sala-item.libero:focus {
-    outline: 3px solid var(--primary-btn);
+    outline: 3px solid #2563EB;
     outline-offset: 2px;
   }
   
   .sala-item.occupato {
-    background: var(--slot-occupied-bg);
-    border-color: var(--slot-occupied-border);
+    background: #f8d7da;
+    border-color: #f5c2c7;
     cursor: not-allowed;
   }
   
   .sala-item.occupato:hover {
-    background: var(--slot-occupied-hover);
+    background: #f5c2c7;
   }
   
   .sala-item.utente {
-    background: var(--slot-user-bg);
-    border-color: var(--slot-user-border);
+    background: #d1e7dd;
+    border-color: #a3cfbb;
   }
   
   .sala-item.utente:hover {
-    background: var(--slot-user-hover);
+    background: #a3cfbb;
   }
   
   .sala-item-info {
@@ -387,17 +336,16 @@ body {
   .sala-nome {
     font-weight: 600;
     font-size: 0.875rem;
-    color: var(--text-primary);
   }
   
   .prenotazione-nome {
     font-size: 0.8125rem;
-    color: var(--slot-occupied-text);
-    font-weight: 500;
+    color: #842029;
+    font-weight: 600;
   }
   
   .sala-item.utente .prenotazione-nome {
-    color: var(--slot-user-text);
+    color: #0f5132;
   }
   
   .sala-item .badge {
@@ -408,67 +356,18 @@ body {
   }
   
   .sala-item.libero .badge {
-    background: var(--slot-user-bg);
-    color: var(--slot-user-text);
+    background: #d1e7dd;
+    color: #0f5132;
   }
   
   .sala-item.occupato .badge {
-    background: var(--slot-occupied-bg);
-    color: var(--slot-occupied-text);
+    background: #f8d7da;
+    color: #842029;
   }
   
   .sala-item.utente .badge {
-    background: var(--slot-user-border);
-    color: var(--slot-user-text);
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --app-bg: #0F172A;
-    --calendar-bg: #1E293B;
-    --grid-line: #334155;
-    --column-header-bg: #1E293B;
-    --text-primary: #F1F5F9;
-    --text-secondary: #94A3B8;
-    
-    --slot-available-bg: #1E293B;
-    --slot-available-border: #334155;
-    --slot-available-hover: #334155;
-    
-    --slot-occupied-bg: #450A0A;
-    --slot-occupied-border: #7F1D1D;
-    --slot-occupied-text: #FCA5A5;
-    --slot-occupied-hover: #7F1D1D;
-    
-    --slot-user-bg: #052E16;
-    --slot-user-border: #166534;
-    --slot-user-text: #86EFAC;
-    --slot-user-hover: #166534;
-    
-    --slot-selection-bg: #1E3A8A;
-    --slot-selection-border: #3B82F6;
-    --slot-selection-text: #93C5FD;
-    --slot-selection-hover: #3B82F6;
-  }
-  
-  .griglia-controls {
-    background: var(--calendar-bg);
-  }
-  
-  .griglia-legend .legend-color.available {
-    background: var(--slot-available-bg);
-    border-color: var(--slot-available-border);
-  }
-  
-  .griglia-legend .legend-color.occupied {
-    background: var(--slot-occupied-bg);
-    border-color: var(--slot-occupied-border);
-  }
-  
-  .griglia-legend .legend-color.user {
-    background: var(--slot-user-bg);
-    border-color: var(--slot-user-border);
+    background: #a3cfbb;
+    color: #0f5132;
   }
 }
 
@@ -481,17 +380,28 @@ body {
     display: none !important;
   }
   
-  body {
-    background: #fff;
-    color: #000;
-  }
-  
   .griglia-tabella {
     font-size: 0.6rem;
+    background: #fff;
     border: 1px solid #000;
+  }
+  
+  .griglia-tabella th {
+    background: #f5f5f5 !important;
   }
   
   .griglia-cell {
-    border: 1px solid #000;
+    border: 1px solid #ccc;
+    background: #fff !important;
+  }
+  
+  .griglia-cell.occupato {
+    background: #fee !important;
+    border-color: #fcc;
+  }
+  
+  .griglia-cell.utente {
+    background: #efe !important;
+    border-color: #cfc;
   }
 }

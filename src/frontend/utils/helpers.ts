@@ -15,6 +15,18 @@ export function formatDateTime(dateString: string): string {
   });
 }
 
+export function formatDate(date: Date): string {
+  return date.toLocaleDateString('it-IT', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
+}
+
+export function formatTime(ora: number, minuti: number = 0): string {
+  return `${ora.toString().padStart(2, '0')}:${minuti.toString().padStart(2, '0')}`;
+}
+
 export function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }

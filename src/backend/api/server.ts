@@ -41,7 +41,7 @@ export class APIServer {
     }
 
     if (pathname.startsWith('/api/')) {
-      this.handleAPIRequest(pathname, method, req, res);
+      this.handleAPIRequest(pathname, method, req, res, parsedUrl);
     } else {
       this.serveStaticFile(pathname, res);
     }
@@ -51,7 +51,8 @@ export class APIServer {
     pathname: string,
     method: string,
     req: IncomingMessage,
-    res: ServerResponse
+    res: ServerResponse,
+    parsedUrl: { pathname: string | null; query: Record<string, string | string[] | undefined> }
   ): void {
     if (pathname === '/api/sale' && method === 'GET') {
       const sale = this.gestoreSale.elencaSale();
@@ -112,6 +113,30 @@ export class APIServer {
       const id = pathname.split('/')[3];
       const result = this.gestorePrenotazioni.cancellaPrenotazione(id);
       this.sendJSON(res, result ? 200 : 404, { success: result });
+      return;
+    }
+
+    const saleMatch = pathname.match(/^\/api\/sale\/([^\/]+)\/prenotazioni$/);
+    if (saleMatch && method === 'GET') {
+      const salaId = saleMatch[1];
+      const query = parsedUrl.query;
+      const anno = query.anno ? parseInt(query.anno as string) : new Date().getFullYear();
+      const mese = query.mese ? parseInt(query.mese as string) : new Date().getMonth();
+
+      const inizioPeriodo = new Date(anno, mese, 1);
+      const finePeriodo = new Date(anno, mese + 1, 0, 23, 59, 59);
+
+      const prenotazioni = this.gestorePrenotazioni.getPrenotazioniSala(salaId).filter(p => {
+        return p.dataInizio <= finePeriodo && p.dataFine >= inizioPeriodo;
+      });
+
+      const response = prenotazioni.map(p => ({
+        ...p,
+        dataInizio: p.dataInizio.toISOString(),
+        dataFine: p.dataFine.toISOString()
+      }));
+
+      this.sendJSON(res, 200, response);
       return;
     }
 

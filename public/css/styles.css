@@ -33,75 +33,187 @@
   animation: fadeIn 0.3s ease-in;
 }
 
-.sala-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+.griglia-tabella {
+  font-size: 0.75rem;
+  border-collapse: separate;
+  border-spacing: 1px;
+}
+
+.griglia-tabella th,
+.griglia-tabella td {
+  padding: 4px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.griglia-tabella .ora-colonna {
+  position: sticky;
+  left: 0;
+  background: #f8f9fa;
+  z-index: 10;
+  min-width: 60px;
+  text-align: center !important;
+  border-right: 2px solid #dee2e6;
+}
+
+.griglia-tabella thead th:not(.ora-colonna) {
+  position: sticky;
+  top: 0;
+  background: #f8f9fa;
+  z-index: 5;
+  white-space: nowrap;
+  min-width: 80px;
+}
+
+.griglia-cell {
+  height: 35px;
+  min-width: 45px;
   cursor: pointer;
-  border: 2px solid transparent;
+  transition: all 0.15s ease;
+  border-radius: 3px;
+  border: 1px solid transparent;
 }
 
-.sala-card:hover,
-.sala-card:focus-within {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  border-color: #0d6efd;
+.griglia-cell:hover {
+  transform: scale(1.1);
+  z-index: 1;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-.badge-capacita {
-  font-size: 0.9rem;
-  padding: 0.5rem 0.75rem;
-}
-
-.stato-confermata {
+.griglia-cell.libero {
   background-color: #d1e7dd;
-  color: #0f5132;
 }
 
-.stato-in_attesa {
-  background-color: #fff3cd;
-  color: #997404;
+.griglia-cell.libero:hover {
+  background-color: #a3d9b1;
 }
 
-.stato-cancellata {
+.griglia-cell.occupato {
   background-color: #f8d7da;
+  cursor: not-allowed;
+}
+
+.griglia-cell.occupato:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.griglia-cell.occupato .prenotazione-info {
+  font-size: 0.6rem;
+  font-weight: bold;
   color: #842029;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 
-.prenotazione-item {
-  border-left: 4px solid #0d6efd;
-  transition: background-color 0.2s ease;
+.griglia-cell.selezionato {
+  background-color: #fff3cd;
+  border-color: #ffc107;
+  box-shadow: 0 0 0 2px #ffc107;
 }
 
-.prenotazione-item:hover {
-  background-color: #f8f9fa;
+.griglia-cell.invalid {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
-.loading-skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s ease-in-out infinite;
-}
-
-@keyframes loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
+.griglia-legend .badge {
+  font-weight: normal;
+  font-size: 0.75rem;
 }
 
 @media (max-width: 768px) {
-  .sala-card {
-    margin-bottom: 1rem;
+  .griglia-tabella {
+    font-size: 0.65rem;
   }
-
-  h1 {
-    font-size: 1.5rem;
+  
+  .griglia-tabella .ora-colonna {
+    min-width: 50px;
   }
-
-  .btn {
-    width: 100%;
-    margin-bottom: 0.5rem;
+  
+  .griglia-cell {
+    height: 28px;
+    min-width: 35px;
+  }
+  
+  .griglia-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+  
+  .ora-card {
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .ora-card-header {
+    background: #f8f9fa;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    align-items: center;
+  }
+  
+  .ora-card-body {
+    padding: 0.5rem;
+  }
+  
+  .sala-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    margin-bottom: 0.25rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  
+  .sala-item:last-child {
+    margin-bottom: 0;
+  }
+  
+  .sala-item.libero {
+    background: #d1e7dd;
+  }
+  
+  .sala-item.libero:hover {
+    background: #a3d9b1;
+    transform: translateX(4px);
+  }
+  
+  .sala-item.libero:focus {
+    outline: 3px solid #0d6efd;
+    outline-offset: 2px;
+  }
+  
+  .sala-item.occupato {
+    background: #f8d7da;
+    cursor: not-allowed;
+  }
+  
+  .sala-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+  
+  .sala-nome {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  
+  .prenotazione-nome {
+    font-size: 0.8rem;
+    color: #842029;
   }
 }
 
@@ -110,18 +222,74 @@
     --bs-body-bg: #212529;
     --bs-body-color: #dee2e6;
   }
+  
+  .griglia-tabella th.ora-colonna,
+  .griglia-tabella thead th:not(.ora-colonna) {
+    background: #343a40;
+  }
+  
+  .griglia-cell.libero {
+    background-color: #1e3a2a;
+  }
+  
+  .griglia-cell.libero:hover {
+    background-color: #2a5040;
+  }
+  
+  .griglia-cell.occupato {
+    background-color: #3a1e20;
+  }
+  
+  .griglia-cell.occupato .prenotazione-info {
+    color: #f5c6cb;
+  }
+  
+  .ora-card {
+    background: #2d3238;
+    border-color: #495057;
+  }
+  
+  .ora-card-header {
+    background: #343a40;
+    border-color: #495057;
+    color: #dee2e6;
+  }
+  
+  .sala-item.libero {
+    background: #1e3a2a;
+  }
+  
+  .sala-item.libero:hover {
+    background: #2a5040;
+  }
+  
+  .sala-item.occupato {
+    background: #3a1e20;
+  }
+  
+  .sala-item-info .sala-nome {
+    color: #dee2e6;
+  }
+  
+  .prenotazione-nome {
+    color: #f5c6cb !important;
+  }
 }
 
 @media print {
-  .btn,
+  .griglia-controls,
+  .modal,
   header,
   footer,
-  #prenotazione-form {
-    display: none;
+  .btn {
+    display: none !important;
   }
-
-  .sala-card,
-  .prenotazione-item {
-    break-inside: avoid;
+  
+  .griglia-tabella {
+    font-size: 0.6rem;
+  }
+  
+  .griglia-cell {
+    border: 1px solid #000;
   }
 }

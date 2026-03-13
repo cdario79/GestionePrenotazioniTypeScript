@@ -33,135 +33,158 @@
     </div>
   </header>
 
-  <main id="main-content" class="container my-5">
+  <main id="main-content" class="container-fluid my-4">
     <div id="alert-container" role="alert" aria-live="polite" aria-atomic="true"></div>
 
-    <section class="mb-5" aria-labelledby="sale-heading">
-      <h2 id="sale-heading" class="h4 mb-4">
-        <i class="bi bi-door-open text-primary" aria-hidden="true"></i>
-        Sale Disponibili
-      </h2>
-
-      <div id="sale-list" class="row g-4" role="list">
-        <div class="col-12 text-center py-5">
-          <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Caricamento sale in corso...</span>
-          </div>
+    <div class="griglia-controls mb-3">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div class="d-flex align-items-center gap-2">
+          <button type="button" class="btn btn-outline-secondary btn-sm" id="giornoPrev">
+            <i class="bi bi-chevron-left" aria-hidden="true"></i>
+          </button>
+          <span id="giornoTitolo" class="fw-bold fs-5">Oggi</span>
+          <button type="button" class="btn btn-outline-secondary btn-sm" id="giornoNext">
+            <i class="bi bi-chevron-right" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="btn btn-outline-primary btn-sm" id="giornoOggi">Oggi</button>
+        </div>
+        <div class="griglia-legend">
+          <span class="badge bg-success me-1"><i class="bi bi-square-fill"></i> Libero</span>
+          <span class="badge bg-danger me-1"><i class="bi bi-square-fill"></i> Occupato</span>
+          <span class="badge bg-warning text-dark me-1"><i class="bi bi-square-fill"></i> La tua prenotazione</span>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section class="mb-5" aria-labelledby="prenota-heading">
-      <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-          <h2 id="prenota-heading" class="h5 mb-0">
+    <div class="table-responsive d-none d-md-block">
+      <table class="table table-bordered table-sm griglia-tabella" id="grigliaPrenotazioni" role="grid" aria-label="Griglia prenotazioni sale">
+        <thead>
+          <tr id="griglia-header">
+            <th class="ora-colonna"><span class="visually-hidden">Orario</span></th>
+          </tr>
+        </thead>
+        <tbody id="griglia-body">
+          <tr>
+            <td colspan="20" class="text-center py-5">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Caricamento...</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="griglia-mobile" class="d-md-none" aria-live="polite"></div>
+  </main>
+
+  <div class="modal fade" id="dettagliSalaModal" tabindex="-1" aria-labelledby="dettagliSalaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title" id="dettagliSalaModalLabel">
+            <i class="bi bi-door-closed" aria-hidden="true"></i>
+            Dettagli Sala
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+        </div>
+        <div class="modal-body">
+          <h4 id="sala-dettagli-nome"></h4>
+          <p class="mb-1"><strong>Capacità:</strong> <span id="sala-dettagli-capacita"></span> persone</p>
+          <p class="mb-0"><strong>Descrizione:</strong> <span id="sala-dettagli-descrizione"></span></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="prenotazioneModal" tabindex="-1" aria-labelledby="prenotazioneModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="prenotazioneModalLabel">
             <i class="bi bi-calendar-plus" aria-hidden="true"></i>
             Nuova Prenotazione
-          </h2>
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Chiudi"></button>
         </div>
-        <div class="card-body">
+        <div class="modal-body">
           <form id="prenotazione-form" novalidate>
-            <div class="mb-3">
-              <label for="sala-select" class="form-label">
-                Sala <span class="text-danger" aria-label="campo obbligatorio">*</span>
-              </label>
-              <select
-                id="sala-select"
-                class="form-select"
-                required
-                aria-required="true"
-                aria-describedby="sala-help">
-                <option value="">Seleziona una sala...</option>
-              </select>
-              <div id="sala-help" class="form-text">
-                Scegli la sala che desideri prenotare
-              </div>
-              <div class="invalid-feedback">
-                Seleziona una sala
+            <input type="hidden" id="sala-id" value="">
+            <input type="hidden" id="data-selezionata" value="">
+
+            <div class="alert alert-info mb-3">
+              <div class="row text-center">
+                <div class="col-4">
+                  <i class="bi bi-building d-block fs-4"></i>
+                  <small id="prenotazione-sala" class="fw-bold"></small>
+                </div>
+                <div class="col-4">
+                  <i class="bi bi-calendar d-block fs-4"></i>
+                  <small id="prenotazione-data" class="fw-bold"></small>
+                </div>
+                <div class="col-4">
+                  <i class="bi bi-clock d-block fs-4"></i>
+                  <small id="prenotazione-orario" class="fw-bold"></small>
+                </div>
               </div>
             </div>
 
             <div class="mb-3">
-              <label for="utente-nome" class="form-label">
-                Nome <span class="text-danger" aria-label="campo obbligatorio">*</span>
+              <label for="prenotazione-nome" class="form-label">
+                Nome Prenotazione / Team <span class="text-danger">*</span>
               </label>
-              <input
-                type="text"
-                id="utente-nome"
-                class="form-control"
-                required
-                aria-required="true"
-                placeholder="Inserisci il tuo nome"
-                minlength="2"
-                maxlength="50">
-              <div class="invalid-feedback">
-                Inserisci un nome valido (2-50 caratteri)
-              </div>
+              <input type="text" id="prenotazione-nome" class="form-control" required 
+                     minlength="2" maxlength="100" placeholder="Es: Riunione marketing, Team UX...">
+              <div class="invalid-feedback">Inserisci un nome valido</div>
             </div>
 
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="data-inizio" class="form-label">
-                  Data Inizio <span class="text-danger" aria-label="campo obbligatorio">*</span>
-                </label>
-                <input
-                  type="datetime-local"
-                  id="data-inizio"
-                  class="form-control"
-                  required
-                  aria-required="true">
-                <div class="invalid-feedback">
-                  Seleziona data e ora di inizio
-                </div>
-              </div>
-
-              <div class="col-md-6 mb-3">
-                <label for="data-fine" class="form-label">
-                  Data Fine <span class="text-danger" aria-label="campo obbligatorio">*</span>
-                </label>
-                <input
-                  type="datetime-local"
-                  id="data-fine"
-                  class="form-control"
-                  required
-                  aria-required="true">
-                <div class="invalid-feedback">
-                  Seleziona data e ora di fine
-                </div>
-              </div>
+            <div class="mb-3">
+              <label for="prenotazione-note" class="form-label">Note (opzionali)</label>
+              <textarea id="prenotazione-note" class="form-control" rows="2" 
+                        placeholder="Eventuali note aggiuntive..."></textarea>
             </div>
 
             <div class="d-flex gap-2">
-              <button
-                type="submit"
-                class="btn btn-primary"
-                id="submit-btn">
-                <i class="bi bi-check-circle" aria-hidden="true"></i>
-                Conferma Prenotazione
-              </button>
-              <button
-                type="reset"
-                class="btn btn-outline-secondary">
-                <i class="bi bi-x-circle" aria-hidden="true"></i>
-                Annulla
-              </button>
+              <div class="flex-grow-1">
+                <label for="ora-inizio" class="form-label">Ora inizio</label>
+                <select id="ora-inizio" class="form-select" required></select>
+              </div>
+              <div class="flex-grow-1">
+                <label for="ora-fine" class="form-label">Ora fine</label>
+                <select id="ora-fine" class="form-select" required></select>
+              </div>
             </div>
           </form>
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+          <button type="button" class="btn btn-primary" id="btnConfermaPrenotazione">
+            <i class="bi bi-check-circle" aria-hidden="true"></i> Conferma Prenotazione
+          </button>
+        </div>
       </div>
-    </section>
+    </div>
+  </div>
 
-    <section aria-labelledby="prenotazioni-heading">
-      <h2 id="prenotazioni-heading" class="h4 mb-4">
-        <i class="bi bi-calendar-check text-success" aria-hidden="true"></i>
-        Prenotazioni Attive
-      </h2>
-
-      <div id="prenotazioni-list" role="list">
-        <p class="text-muted">Nessuna prenotazione attiva</p>
+  <div class="modal fade" id="risultatoModal" tabindex="-1" aria-labelledby="risultatoModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body text-center py-4">
+          <div id="risultato-icon" class="mb-3"></div>
+          <h5 id="risultato-titolo" class="mb-2"></h5>
+          <p id="risultato-messaggio" class="text-muted mb-0"></p>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-primary" id="btnChiudiRisultato" data-bs-dismiss="modal">
+            Chiudi
+          </button>
+        </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </div>
 
   <footer class="bg-light py-4 mt-5">
     <div class="container text-center">

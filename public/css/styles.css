@@ -134,6 +134,25 @@
   margin-bottom: 16px;
 }
 
+.data-navigation {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.data-navigation #giornoTitolo {
+  display: inline-block;
+  width: 320px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 6px 12px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
 .griglia-legend {
   display: flex;
   gap: 16px;
@@ -173,6 +192,12 @@
 .btn-primary:hover {
   background-color: #1D4ED8;
   border-color: #1D4ED8;
+}
+
+@media (max-width: 768px) {
+  .data-navigation #giornoTitolo {
+    width: 220px;
+  }
 }
 
 @media (max-width: 992px) {

@@ -307,26 +307,12 @@ export class UIManager {
     const titolo = document.getElementById('giornoTitolo');
     if (!titolo) return;
 
-    const oggi = new Date();
-    const isToday = dataCorrente.toDateString() === oggi.toDateString();
-
-    if (isToday) {
-      titolo.textContent = 'Oggi';
-    } else {
-      const domani = new Date(oggi);
-      domani.setDate(domani.getDate() + 1);
-      const isDomani = dataCorrente.toDateString() === domani.toDateString();
-
-      if (isDomani) {
-        titolo.textContent = 'Domani';
-      } else {
         titolo.textContent = dataCorrente.toLocaleDateString('it-IT', {
-          weekday: 'long',
-          day: 'numeric',
-          month: 'long'
-        });
-      }
-    }
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
   }
 
   popolaSelectOre(oraSelezionata?: string): void {

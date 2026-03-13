@@ -21,46 +21,51 @@
     Salta al contenuto principale
   </a>
 
-  <header class="bg-primary text-white py-3 shadow-sm">
+  <header class="text-white py-3 shadow-sm" style="background-color: #2563EB;">
     <div class="container">
       <div class="d-flex align-items-center">
         <i class="bi bi-building fs-2 me-3" aria-hidden="true"></i>
         <div>
           <h1 class="h3 mb-0">WorkSphere Solutions</h1>
-          <p class="mb-0 small">Sistema di Gestione Prenotazioni</p>
+          <p class="mb-0 small opacity-75">Sistema di Gestione Prenotazioni</p>
         </div>
       </div>
     </div>
   </header>
 
-  <main id="main-content" class="container-fluid my-4">
+  <main id="main-content" class="container my-4">
     <div id="alert-container" role="alert" aria-live="polite" aria-atomic="true"></div>
 
-    <div class="griglia-controls mb-3">
-      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <div class="griglia-controls mb-4">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
         <div class="d-flex align-items-center gap-2">
-          <button type="button" class="btn btn-outline-secondary btn-sm" id="giornoPrev">
+          <button type="button" class="btn btn-outline-secondary btn-sm" id="giornoPrev" aria-label="Giorno precedente">
             <i class="bi bi-chevron-left" aria-hidden="true"></i>
           </button>
           <span id="giornoTitolo" class="fw-bold fs-5">Oggi</span>
-          <button type="button" class="btn btn-outline-secondary btn-sm" id="giornoNext">
+          <button type="button" class="btn btn-outline-secondary btn-sm" id="giornoNext" aria-label="Giorno successivo">
             <i class="bi bi-chevron-right" aria-hidden="true"></i>
           </button>
-          <button type="button" class="btn btn-outline-primary btn-sm" id="giornoOggi">Oggi</button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" id="giornoOggi">Oggi</button>
         </div>
-        <div class="griglia-legend">
-          <span class="badge bg-success me-1"><i class="bi bi-square-fill"></i> Libero</span>
-          <span class="badge bg-danger me-1"><i class="bi bi-square-fill"></i> Occupato</span>
-          <span class="badge bg-warning text-dark me-1"><i class="bi bi-square-fill"></i> La tua prenotazione</span>
+        <div class="griglia-legend" role="list" aria-label="Legenda stati prenotazione">
+          <div class="legend-item" role="listitem">
+            <span class="legend-color available" aria-hidden="true"></span>
+            <span>Libero</span>
+          </div>
+          <div class="legend-item" role="listitem">
+            <span class="legend-color occupied" aria-hidden="true"></span>
+            <span>Occupato</span>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="table-responsive d-none d-md-block">
-      <table class="table table-bordered table-sm griglia-tabella" id="grigliaPrenotazioni" role="grid" aria-label="Griglia prenotazioni sale">
+      <table class="table griglia-tabella" id="grigliaPrenotazioni" role="grid" aria-label="Griglia prenotazioni sale">
         <thead>
           <tr id="griglia-header">
-            <th class="ora-colonna"><span class="visually-hidden">Orario</span></th>
+            <th class="ora-colonna" scope="col"><span class="visually-hidden">Orario</span></th>
           </tr>
         </thead>
         <tbody id="griglia-body">
@@ -186,9 +191,9 @@
     </div>
   </div>
 
-  <footer class="bg-light py-4 mt-5">
+  <footer class="py-4 mt-5" style="background-color: #F1F5F9;">
     <div class="container text-center">
-      <p class="text-muted mb-0">
+      <p class="mb-0" style="color: #475569;">
         &copy; 2025 WorkSphere Solutions. Sistema di gestione prenotazioni.
       </p>
     </div>

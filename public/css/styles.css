@@ -27,10 +27,9 @@
 
 .griglia-tabella {
   font-size: 0.8125rem;
-  border-collapse: separate;
-  border-spacing: 0;
+  border-collapse: collapse;
   background: #fff;
-  border: 1px solid var(--grid-line);
+  border: 1px solid #adb5bd;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -40,7 +39,7 @@
   padding: 0;
   text-align: center;
   vertical-align: middle;
-  border: 1px solid var(--grid-line);
+  border: 1px solid #adb5bd;
   border-radius: 0;
 }
 
@@ -80,7 +79,6 @@
   cursor: pointer;
   transition: all 0.15s ease;
   border-radius: 0;
-  border: 1px solid #ced4da;
   background-color: #f8f9fa;
   display: flex;
   align-items: center;
@@ -94,12 +92,10 @@
 
 .griglia-cell.libero {
   background-color: #f8f9fa;
-  border-color: #ced4da;
 }
 
 .griglia-cell.libero:hover {
   background-color: #e9ecef;
-  border-color: #adb5bd;
 }
 
 .griglia-cell.libero:focus-visible {

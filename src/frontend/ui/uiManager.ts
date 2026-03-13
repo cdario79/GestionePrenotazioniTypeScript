@@ -50,7 +50,7 @@ export class UIManager {
 
     let headerHtml = '<th class="ora-colonna"><span class="visually-hidden">Orario</span></th>';
     sale.forEach(sala => {
-      headerHtml += `<th scope="col">${escapeHtml(sala.nome)}</th>`;
+      headerHtml += `<th scope="col"><span>${escapeHtml(sala.nome)}</span></th>`;
     });
     header.innerHTML = headerHtml;
 
@@ -125,7 +125,7 @@ export class UIManager {
 
     tableHeader.innerHTML = '<th class="ora-colonna"><span class="visually-hidden">Orario</span></th>';
     sale.forEach(sala => {
-      tableHeader.innerHTML += `<th scope="col">${escapeHtml(sala.nome)}</th>`;
+      tableHeader.innerHTML += `<th scope="col"><span>${escapeHtml(sala.nome)}</span></th>`;
     });
 
     if (!sale || sale.length === 0) {

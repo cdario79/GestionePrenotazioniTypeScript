@@ -126,44 +126,6 @@
   text-align: center;
 }
 
-.griglia-cell.utente {
-  background-color: #d1e7dd;
-  border-color: #a3cfbb;
-  cursor: not-allowed;
-}
-
-.griglia-cell.utente:hover {
-  background-color: #a3cfbb;
-}
-
-.griglia-cell.utente .prenotazione-info {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: #0f5132;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 100%;
-  text-align: center;
-}
-
-.griglia-cell.selezionato {
-  background-color: #cfe2ff;
-  border-color: #9ec5fe;
-  box-shadow: inset 0 0 0 2px #9ec5fe;
-}
-
-.griglia-cell.selezionato:hover {
-  background-color: #b6d4fe;
-}
-
-.griglia-cell.invalid {
-  background-color: #e9ecef;
-  border-color: #dee2e6;
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
 .griglia-controls {
   background: #fff;
   padding: 16px 20px;
@@ -201,11 +163,6 @@
 .griglia-legend .legend-color.occupied {
   background: #f8d7da;
   border-color: #f5c2c7;
-}
-
-.griglia-legend .legend-color.user {
-  background: #d1e7dd;
-  border-color: #a3cfbb;
 }
 
 .btn-primary {
@@ -357,16 +314,7 @@
   .sala-item.occupato:hover {
     background: #f5c2c7;
   }
-  
-  .sala-item.utente {
-    background: #d1e7dd;
-    border-color: #a3cfbb;
-  }
-  
-  .sala-item.utente:hover {
-    background: #a3cfbb;
-  }
-  
+
   .sala-item-info {
     display: flex;
     flex-direction: column;
@@ -383,11 +331,7 @@
     color: #842029;
     font-weight: 600;
   }
-  
-  .sala-item.utente .prenotazione-nome {
-    color: #0f5132;
-  }
-  
+
   .sala-item .badge {
     font-size: 0.6875rem;
     font-weight: 600;
@@ -404,12 +348,6 @@
     background: #f8d7da;
     color: #842029;
   }
-  
-  .sala-item.utente .badge {
-    background: #a3cfbb;
-    color: #0f5132;
-  }
-
 
 @media print {
   .griglia-controls,

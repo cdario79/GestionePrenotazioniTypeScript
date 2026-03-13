@@ -126,6 +126,19 @@
   text-align: center;
 }
 
+.griglia-cell.passato {
+  background-color: #6c757d;
+  border-color: #5c636a;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.griglia-cell.passato:hover {
+  background-color: #6c757d;
+  transform: none;
+  box-shadow: none;
+}
+
 .griglia-controls {
   background: #fff;
   padding: 16px 20px;
@@ -338,6 +351,18 @@
   
   .sala-item.occupato:hover {
     background: #f5c2c7;
+  }
+
+  .sala-item.passato {
+    background: #6c757d;
+    border-color: #5c636a;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  .sala-item.passato:hover {
+    background: #6c757d;
+    transform: none;
   }
 
   .sala-item-info {

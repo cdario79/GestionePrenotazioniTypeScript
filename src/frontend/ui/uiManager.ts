@@ -38,7 +38,11 @@ export class UIManager {
     const mobileContainer = document.getElementById('griglia-mobile');
     if (!header || !body || !mobileContainer) return;
 
-    const dataStr = dataCorrente.toISOString().split('T')[0];
+    // Usa la data locale invece di ISO per evitare problemi di timezone
+    const anno = dataCorrente.getFullYear();
+    const mese = String(dataCorrente.getMonth() + 1).padStart(2, '0');
+    const giorno = String(dataCorrente.getDate()).padStart(2, '0');
+    const dataStr = `${anno}-${mese}-${giorno}`;
     const fasceOrarie = this.generaFasceOrarie();
 
     const isMobile = window.innerWidth < 768;
@@ -75,21 +79,24 @@ export class UIManager {
       bodyHtml += `<th scope="row" class="ora-colonna">${fascia}</th>`;
 
       const [ora, min] = fascia.split(':').map(Number);
+      const isSlotPassed = this.isSlotPassato(dataStr, ora, min);
 
       sale.forEach(sala => {
         const prenotazioniSala = prenotazioni.filter(p => p.salaId === sala.id);
         const slotKey = `${dataStr}-${ora}-${min}`;
         const info = this.getSlotInfo(prenotazioniSala, dataStr, slotKey);
 
-        const ariaLabel = info 
+        const ariaLabel = info
           ? `${sala.nome}, ${fascia}, occupato da ${info.nome}`
+          : isSlotPassed
+          ? `${sala.nome}, ${fascia}, orario passato`
           : `${sala.nome}, ${fascia}, libero`;
 
         if (info) {
           bodyHtml += `
             <td>
-              <div class="griglia-cell occupato" 
-                   data-sala-id="${sala.id}" 
+              <div class="griglia-cell occupato"
+                   data-sala-id="${sala.id}"
                    data-ora="${fascia}"
                    aria-label="${ariaLabel}"
                    title="${escapeHtml(info.nome)} (${info.inizio} - ${info.fine})">
@@ -97,11 +104,19 @@ export class UIManager {
               </div>
             </td>
           `;
+        } else if (isSlotPassed) {
+          bodyHtml += `
+            <td>
+              <div class="griglia-cell passato"
+                   aria-label="${ariaLabel}"
+                   title="Orario passato"></div>
+            </td>
+          `;
         } else {
           bodyHtml += `
             <td>
-              <div class="griglia-cell libero" 
-                   data-sala-id="${sala.id}" 
+              <div class="griglia-cell libero"
+                   data-sala-id="${sala.id}"
                    data-ora="${fascia}"
                    data-data="${dataStr}"
                    aria-label="${ariaLabel}"
@@ -149,21 +164,24 @@ export class UIManager {
       tableBodyHtml += `<th scope="row" class="ora-colonna">${fascia}</th>`;
 
       const [ora, min] = fascia.split(':').map(Number);
+      const isSlotPassed = this.isSlotPassato(dataStr, ora, min);
 
       sale.forEach(sala => {
         const prenotazioniSala = prenotazioni.filter(p => p.salaId === sala.id);
         const slotKey = `${dataStr}-${ora}-${min}`;
         const info = this.getSlotInfo(prenotazioniSala, dataStr, slotKey);
 
-        const ariaLabel = info 
+        const ariaLabel = info
           ? `${sala.nome}, ${fascia}, occupato da ${info.nome}`
+          : isSlotPassed
+          ? `${sala.nome}, ${fascia}, orario passato`
           : `${sala.nome}, ${fascia}, libero`;
 
         if (info) {
           tableBodyHtml += `
             <td>
-              <div class="griglia-cell occupato" 
-                   data-sala-id="${sala.id}" 
+              <div class="griglia-cell occupato"
+                   data-sala-id="${sala.id}"
                    data-ora="${fascia}"
                    aria-label="${ariaLabel}"
                    title="${escapeHtml(info.nome)} (${info.inizio} - ${info.fine})">
@@ -171,11 +189,19 @@ export class UIManager {
               </div>
             </td>
           `;
+        } else if (isSlotPassed) {
+          tableBodyHtml += `
+            <td>
+              <div class="griglia-cell passato"
+                   aria-label="${ariaLabel}"
+                   title="Orario passato"></div>
+            </td>
+          `;
         } else {
           tableBodyHtml += `
             <td>
-              <div class="griglia-cell libero" 
-                   data-sala-id="${sala.id}" 
+              <div class="griglia-cell libero"
+                   data-sala-id="${sala.id}"
                    data-ora="${fascia}"
                    data-data="${dataStr}"
                    aria-label="${ariaLabel}"
@@ -195,6 +221,7 @@ export class UIManager {
     fasceOrarie.forEach(fascia => {
       const [ora, min] = fascia.split(':').map(Number);
       const slotKey = `${dataStr}-${ora}-${min}`;
+      const isSlotPassed = this.isSlotPassato(dataStr, ora, min);
 
       mobileHtml += `
         <div class="ora-card" role="option" aria-label="Orario ${fascia}">
@@ -209,8 +236,10 @@ export class UIManager {
         const prenotazioniSala = prenotazioni.filter(p => p.salaId === sala.id);
         const info = this.getSlotInfo(prenotazioniSala, dataStr, slotKey);
 
-        const ariaLabel = info 
+        const ariaLabel = info
           ? `${sala.nome} - occupato da ${info.nome}`
+          : isSlotPassed
+          ? `${sala.nome} - orario passato`
           : `${sala.nome} - libero, clicca per prenotare`;
 
         if (info) {
@@ -223,10 +252,20 @@ export class UIManager {
               <span class="badge bg-danger">Occupato</span>
             </div>
           `;
+        } else if (isSlotPassed) {
+          mobileHtml += `
+            <div class="sala-item passato" aria-label="${ariaLabel}">
+              <div class="sala-item-info">
+                <span class="sala-nome">${escapeHtml(sala.nome)}</span>
+                <span class="text-muted">Orario passato</span>
+              </div>
+              <span class="badge bg-secondary">Passato</span>
+            </div>
+          `;
         } else {
           mobileHtml += `
-            <div class="sala-item libero" 
-                 data-sala-id="${sala.id}" 
+            <div class="sala-item libero"
+                 data-sala-id="${sala.id}"
                  data-ora="${fascia}"
                  data-data="${dataStr}"
                  role="button"
@@ -256,6 +295,17 @@ export class UIManager {
   private getSlotInfo(prenotazioniSala: Prenotazione[], dataStr: string, slotKey: string): { nome: string; inizio: string; fine: string } | null {
     const occMap = this.getSlotStatus(prenotazioniSala, dataStr);
     return occMap.get(slotKey) || null;
+  }
+
+  private isSlotPassato(dataStr: string, ora: number, min: number): boolean {
+    const adesso = new Date();
+
+    // Crea la data dello slot
+    const [annoSlot, meseSlot, giornoSlot] = dataStr.split('-').map(Number);
+    const dataOraSlot = new Date(annoSlot, meseSlot - 1, giornoSlot, ora, min, 0, 0);
+
+    // Lo slot è passato se la sua data+ora è minore di adesso
+    return dataOraSlot.getTime() < adesso.getTime();
   }
 
   private generaFasceOrarie(): string[] {

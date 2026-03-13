@@ -111,8 +111,18 @@ class App {
   }
 
   private navigaGiorno(direzione: number): void {
-    this.currentDate.setDate(this.currentDate.getDate() + direzione);
-    this.aggiornaGriglia();
+    const nuovaData = new Date(this.currentDate);
+    nuovaData.setDate(nuovaData.getDate() + direzione);
+
+    // Impedisce di andare a date precedenti a oggi
+    const oggi = new Date();
+    oggi.setHours(0, 0, 0, 0);
+    nuovaData.setHours(0, 0, 0, 0);
+
+    if (nuovaData >= oggi) {
+      this.currentDate = nuovaData;
+      this.aggiornaGriglia();
+    }
   }
 
   private vaiAOggi(): void {

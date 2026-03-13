@@ -1,7 +1,7 @@
-import { APIService } from './services/apiService';
-import { UIManager } from './ui/uiManager';
-import { Prenotazione, Sala } from './models/types';
-import { generateId } from './utils/helpers';
+import { APIService } from './services';
+import { UIManager } from './ui';
+import { Prenotazione, Sala } from './models';
+import { generateId } from './utils';
 
 declare const bootstrap: {
   Modal: {
